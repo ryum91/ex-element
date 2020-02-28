@@ -121,6 +121,10 @@ class ExElement {
 
     return this;
   }
+
+  on(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) {
+    this.el.addEventListener(type, listener, options);
+  }
 }
 
 export default ExElement;

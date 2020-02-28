@@ -6,7 +6,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "deploy": "npm run build && npm publish"
+    "deploy": "npm run build && npm publish",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -18,8 +20,28 @@
   "homepage": "https://github.com/ryum91/ex-element",
   "author": "ryum",
   "license": "MIT",
-  "keywords": ["dom", "browser", "HTMLElement", "Element", "ex-element"],
+  "keywords": [
+    "dom",
+    "browser",
+    "HTMLElement",
+    "Element",
+    "ex-element"
+  ],
   "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "@storybook/html": "^5.3.14",
+    "@types/events": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "babel-loader": "^8.0.6",
+    "eslint": "^6.8.0",
+    "eslint-config-naver": "^2.1.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-loader": "^3.0.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
+    "storybook": "^5.3.14",
+    "ts-loader": "^6.2.1",
     "typescript": "^3.8.2"
   }
 }
