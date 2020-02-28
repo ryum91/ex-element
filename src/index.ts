@@ -16,6 +16,9 @@ class ExElement {
   }
 
   private el!: HTMLElement;
+  private eventMap: {
+    [key: string]: EventListenerOrEventListenerObject[];
+  } = {};
 
   constructor(el: HTMLElement) {
     this.el = el;
@@ -34,6 +37,10 @@ class ExElement {
     return this;
   }
 
+  addClasses(...appendClassNames: string[]) {
+    appendClassNames.forEach(appendClassName => this.addClass(appendClassName));
+  }
+
   removeClass(removeClassName: string) {
     if (this.el.className && this.el.className.indexOf(removeClassName) !== -1) {
       this.el.className = this.el.className
@@ -44,8 +51,16 @@ class ExElement {
     return this;
   }
 
+  removeClasses(...removeClassNames: string[]) {
+    removeClassNames.forEach(removeClassName => this.removeClass(removeClassName));
+  }
+
   toggleClass(toggle: boolean, targetClassName: string) {
     return toggle ? this.addClass(targetClassName) : this.removeClass(targetClassName);
+  }
+
+  classList() {
+    return this.el.className ? this.el.className.split(' ') : [];
   }
 
   show() {
@@ -127,6 +142,29 @@ class ExElement {
 
   on(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) {
     this.el.addEventListener(type, listener, options);
+    
+    if (!this.eventMap[type]) this.eventMap[type] = [];
+
+    this.eventMap[type].push(listener);
+    return this.eventMap[type].length - 1;
+  }
+
+  off(type: string, eventIdx?: number, options?: boolean | EventListenerOptions) {
+    if (!this.eventMap[type]) {
+      return;
+    }
+
+    if (undefined !== eventIdx) {
+      this.el.removeEventListener(type, this.eventMap[type][eventIdx], options);
+      this.eventMap[type].splice(eventIdx, 1);
+      
+      return;
+    }
+
+    this.eventMap[type].forEach(eventListener => {
+      this.el.removeEventListener(type, eventListener, options);
+    })
+    this.eventMap[type] = [];
   }
 }
 
