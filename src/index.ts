@@ -3,6 +3,16 @@ class ExElement {
     return new ExElement(document.createElement(tagName, options));
   }
 
+  static get(selector: string) {
+    let find = document.querySelector(selector);
+    
+    if (null !== find) {
+      return new ExElement(find as HTMLElement);
+    } else {
+      return null;
+    }
+  }
+
   private el!: HTMLElement;
 
   constructor(el: HTMLElement) {
