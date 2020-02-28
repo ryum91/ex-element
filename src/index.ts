@@ -92,6 +92,16 @@ class ExElement {
     return this;
   }
 
+  prepend(element: this) {
+    this.el.prepend(element.el);
+    return this;
+  }
+
+  prependTo(element: this) {
+    element.prepend(this);
+    return this;
+  }
+
   setStyle(styleObj: Partial<CSSStyleDeclaration>) {
     for (const key in styleObj) {
       const value = styleObj[key]!;
