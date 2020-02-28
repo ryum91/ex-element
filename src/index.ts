@@ -1,3 +1,5 @@
+import { camelCaseToDash } from "./utils";
+
 class ExElement {
   static create(tagName: keyof HTMLElementTagNameMap, options?: ElementCreationOptions) {
     return new ExElement(document.createElement(tagName, options));
@@ -104,6 +106,7 @@ class ExElement {
 
   setStyle(styleObj: Partial<CSSStyleDeclaration>) {
     for (const key in styleObj) {
+      const propertyKey = camelCaseToDash(key);
       const value = styleObj[key];
       
       if (value === undefined) {
@@ -113,9 +116,9 @@ class ExElement {
       const importantIdx = value.indexOf(' !important');
   
       if (importantIdx !== -1) {
-        this.el.style.setProperty(key, value.substring(0, importantIdx), 'important');
+        this.el.style.setProperty(propertyKey, value.substring(0, importantIdx), 'important');
       } else {
-        this.el.style.setProperty(key, value);
+        this.el.style.setProperty(propertyKey, value);
       }
     }
 
