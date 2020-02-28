@@ -4,9 +4,9 @@ class ExElement {
   }
 
   static get(selector: string) {
-    let find = document.querySelector(selector);
+    const find = document.querySelector(selector);
     
-    if (null !== find) {
+    if (find !== null) {
       return new ExElement(find as HTMLElement);
     } else {
       return null;
@@ -104,8 +104,12 @@ class ExElement {
 
   setStyle(styleObj: Partial<CSSStyleDeclaration>) {
     for (const key in styleObj) {
-      const value = styleObj[key]!;
+      const value = styleObj[key];
       
+      if (value === undefined) {
+        continue;
+      }
+
       const importantIdx = value.indexOf(' !important');
   
       if (importantIdx !== -1) {
