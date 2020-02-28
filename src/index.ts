@@ -17,7 +17,7 @@ class ExElement {
 
   private el!: HTMLElement;
   private eventMap: {
-    [key: string]: EventListenerOrEventListenerObject[];
+    [key: string]: (EventListenerOrEventListenerObject | null)[];
   } = {};
 
   constructor(el: HTMLElement) {
@@ -154,15 +154,15 @@ class ExElement {
       return;
     }
 
-    if (undefined !== eventIdx) {
-      this.el.removeEventListener(type, this.eventMap[type][eventIdx], options);
-      this.eventMap[type].splice(eventIdx, 1);
+    if (undefined !== eventIdx && this.eventMap[type] && this.eventMap[type][eventIdx] !== null) {
+      this.el.removeEventListener(type, this.eventMap[type][eventIdx] as EventListenerOrEventListenerObject, options);
+      this.eventMap[type].splice(eventIdx, 1, null);
       
       return;
     }
 
     this.eventMap[type].forEach(eventListener => {
-      this.el.removeEventListener(type, eventListener, options);
+      if (eventListener !== null) this.el.removeEventListener(type, eventListener, options);
     })
     this.eventMap[type] = [];
   }
