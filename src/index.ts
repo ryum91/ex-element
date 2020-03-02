@@ -39,6 +39,7 @@ class ExElement {
 
   addClasses(...appendClassNames: string[]) {
     appendClassNames.forEach(appendClassName => this.addClass(appendClassName));
+    return this;
   }
 
   removeClass(removeClassName: string) {
@@ -53,6 +54,7 @@ class ExElement {
 
   removeClasses(...removeClassNames: string[]) {
     removeClassNames.forEach(removeClassName => this.removeClass(removeClassName));
+    return this;
   }
 
   toggleClass(toggle: boolean, targetClassName: string) {
